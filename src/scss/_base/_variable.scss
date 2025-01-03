@@ -1,0 +1,30 @@
+//theme color variables
+$primary-blue-color: #11497B;
+$primary-white-color: #ffffff;
+$primary-black-color: #000000;
+$primary-gray-color: #212020;
+$primary-red-light-color: #b50909;
+$primary-red-dark-color: #5d0505;
+$primary-white-gray-color: #f7f5f5;
+
+$navbar-link-color: #167cd7;
+
+$section-title-color: #2f353f;
+
+$footer-main-color: #1b1b1b;
+
+$form-call-button-green-color: #86BC42;
+$form-call-button-blue-color: #167cd7;
+$form-call-button-red-color: #b50909;
+$form-call-button-dark-red-color: #5d0505;
+
+
+$social-icons-width: 25px;
+$social-icons-gap: 15px;
+
+$header-top-padding-vertical: 8px;
+$header-main-margin-top: calc(($header-top-padding-vertical * 2)  + $social-icons-width + 5px);
+$scrollbar-width: 10px;
+
+$section-title-gap: 35px;
+$section-block-gap: 60px;

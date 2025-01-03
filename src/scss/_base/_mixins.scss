@@ -1,0 +1,401 @@
+@mixin gridDisplay
+(
+  $grisColumns: 1fr,
+  $gapGrid: 0px,
+){
+  display: grid;
+  grid-template-columns: $grisColumns;
+  grid-gap: $gapGrid;
+}
+
+/*Display flex simple function*/
+@mixin displayFlex
+(
+  $alignItems: center,
+  $justifyContent: center,
+  $flexDirection: row,
+  $flexGap: 15px,
+){
+  display: flex;
+  align-items: $alignItems;
+  justify-content: $justifyContent;
+  flex-direction: $flexDirection;
+  gap: $flexGap;
+}
+
+/*Main settings of fonts styles*/
+@mixin fontSettings(
+  $fontWeight: 400,
+  $fontSize: 14px,
+  $lineHeight: 1.2,
+  $colorValue: #000000,
+  $textAlign: start,
+){
+  font-size: $fontSize;
+  font-weight: $fontWeight;
+  line-height: $lineHeight;
+  color: $colorValue;
+  text-align: $textAlign;
+}
+
+/*default setting of width height values*/
+@mixin widthHeight(
+  $widthValue: 100%,
+  $heightValue: auto,
+){
+  width: $widthValue;
+  height: $heightValue;
+}
+
+/*default setting of position function*/
+@mixin positionSettings(
+  $positionValue: absolute,
+  $topValue: auto,
+  $rightValue: auto,
+  $bottomValue: auto,
+  $leftValue: auto,
+){
+  position: $positionValue;
+  top: $topValue;
+  bottom: $bottomValue;
+  left: $leftValue;
+  right: $rightValue;
+}
+
+/*underline*/
+@mixin elementUnderlineAfter(
+  $heightValue: 1px,
+  $backgroundColorValue: rgba(0,0,0,0.6),
+  $positionTop: auto,
+  $positionRight: auto,
+  $positionBottom: auto,
+  $positionLeft: auto,
+){
+  &:after{
+    content: '';
+    @include positionSettings(absolute, $positionTop, $positionRight, $positionBottom, $positionLeft);
+    @include widthHeight(100%, $heightValue);
+    background-color: $backgroundColorValue;
+  }
+}
+
+/*image settings*/
+@mixin imageWidth(
+  $widthValue: 100%,
+  $heightValue: auto,
+  $objectValue: cover,
+  $imageRadius: 0,
+  $transitionValue: 0.3s,
+){
+  width: $widthValue;
+  height: $heightValue;
+  max-width: 100%;
+  object-fit: $objectValue;
+  border-radius: $imageRadius;
+  transition: all $transitionValue;
+}
+/*image effects*/
+@mixin imageAfterShadow($positionValue: absolute, $borderRadius: 16px, $shadowValue: 0.45,){
+  &:after{
+    content: '';
+    @include positionSettings($positionValue, 0, 0, 0, 0);
+    @include widthHeight(100%, 100%);
+    background-color: rgba(0,0,0,$shadowValue);
+    border-radius: $borderRadius;
+  }
+}
+
+/*under block line*/
+@mixin underBlockLine($lineHeight: 2px, $lineColor: rgba(201, 201, 201, 0.25),){
+  content: '';
+  @include positionSettings(fixed, auto, 0,0,0);
+  @include widthHeight(100%, $lineHeight);
+  background-color: $lineColor;
+}
+/*styles for accordion answer block*/
+@mixin accordionAnswer(
+  $widthValue: 100%,
+  $heightValue: 0,
+  $transitionTime: 0.3s
+){
+  @include widthHeight($widthValue, $heightValue);
+  padding: 0;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity $transitionTime linear, padding $transitionTime linear;
+}
+@mixin accordionAnswerActive(
+){
+  padding: 0;
+  visibility: visible;
+  opacity: 1;
+}
+/*
+    ==============================================
+    ANIMATION
+    ==============================================
+ */
+
+@mixin imageScaleAnimation($scaleValue: 1.1){ transform: scale($scaleValue); }
+
+@mixin externalDesign(
+  $backGroundValue: #fff,
+  $paddingValue: 0,
+  $borderRadiusValue: 12px
+){
+  background-color: $backGroundValue;
+  border-radius: $borderRadiusValue;
+  padding: $paddingValue;
+}
+
+@mixin linkButton(
+  $backgroundValue: red,
+  $borderRadiusValue: 10px,
+  $paddingValue: 16px,
+  $transitionValue: 0.3s,
+  $borderWidthValue: 1px,
+  $borderIf: false,
+  $newBorderColor: blue,
+)
+{
+  background-color: $backgroundValue;
+  border-radius: $borderRadiusValue;
+  padding: $paddingValue;
+  @if $borderIf{
+    border: $borderWidthValue solid $newBorderColor;
+  }@else{
+    border: $borderWidthValue solid $backgroundValue;
+  }
+  transition: all $transitionValue linear;
+  cursor: pointer;
+}
+
+/*classic button hover effect*/
+@mixin buttonHover($colorValue: #ff3b3b, $backgroundValue: #fff, $borderValue: 1px){
+  background-color: $backgroundValue;
+  color: $colorValue;
+  border: $borderValue solid $colorValue;
+}
+@mixin leftVisibleAnimation($transitionTime: 2s){
+  opacity: 0;
+  transform: translateX(-150%);
+  animation: leftPosition $transitionTime forwards;
+}
+
+@mixin rightVisibleAnimation($transitionTime: 2s){
+  opacity: 0;
+  transform: translateX(150%);
+  animation: rightPosition $transitionTime forwards;
+}
+
+@mixin opacityVisibleAnimation($transitionTime: 2s){
+  opacity: 0;
+  animation: opacityVisible $transitionTime forwards;
+}
+@mixin pulseAnimation(
+  $animationWidth: -15px,
+  $animationColor: #ff3b3b,
+  $animationSpeed: 2.5s
+){
+  @include positionSettings(absolute, $animationWidth, $animationWidth, $animationWidth, $animationWidth);
+  border: 2px solid $animationColor;
+  opacity: 0;
+  border-radius: 50%;
+  animation: pulse $animationSpeed linear infinite;
+}
+
+/*js visible animation*/
+@mixin jsVisibleAnimation($translateValue: 150%, $animationSpeed: 1s){
+  transform: translateX($translateValue);
+  opacity: 0;
+  visibility: hidden;
+  transition: all $animationSpeed linear;
+}
+
+@mixin leftVisibleElement(){
+  animation: 1s leftPosition ease-in-out;
+}
+@mixin rightVisibleElement(){
+  animation: 1s rightPosition ease-in-out;
+}
+
+/*simple animation block*/
+/***********************/
+/*left visible animation*/
+@keyframes leftPosition {
+  0%{transform: translateX(-150%); opacity: 0; display: none}
+  100%{transform: translateX(0); opacity: 1; display: flex}
+}
+@keyframes leftPositionRemove {
+  0%{transform: translateX(0); opacity: 1;}
+  100%{transform: translateX(-150%); opacity: 0;}
+}
+/*right visible animation*/
+@keyframes rightPosition {
+  0%{transform: translateX(150%); opacity: 0;}
+  100%{transform: translateX(0); opacity: 1;}
+}
+@keyframes bottomPosition {
+  0%{transform: translateY(150%); opacity: 0;}
+  100%{transform: translateY(0); opacity: 1;}
+}
+/*opacity visible animation*/
+@keyframes opacityVisible {
+  0%{opacity: 0;}
+  100%{opacity: 1;}
+}
+/*pulse animation*/
+@keyframes pulse {
+  0% { transform: scale(0.5); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: scale(1.2); opacity: 0; }
+}
+@keyframes rotateAnimation {
+  100%{transform: rotate(90deg); opacity: 1;}
+}
+@keyframes scaleImage {
+  0%{transform: scale(1)}
+  100%{transform: scale(1.3)}
+}
+
+//Header navbar link hover effect
+@mixin listItemStylesHover(
+  $listBottomPosition: 0px,
+  $listBorderHeight: 1px,
+  $listBorderColor: #000
+){
+  position: relative;
+
+  &:before{
+    content: '';
+    @include widthHeight(100%, auto);
+    @include positionSettings(absolute, auto, 0, $listBottomPosition);
+    border-bottom: $listBorderHeight solid $listBorderColor;
+    transform: scaleX(0);
+    transition: all .5s ease-in-out;
+  }
+}
+
+
+@mixin buttonStyles(
+  $buttonBackgroundColor: #fff,
+  $buttonPadding: 0px,
+  $buttonBorderRadius: 0px,
+  $buttonTextTransform: none,
+  $buttonTransitionTime: 0s,
+) {
+  background-color: $buttonBackgroundColor;
+  padding: $buttonPadding;
+  border-radius: $buttonBorderRadius;
+  text-transform: $buttonTextTransform;
+  transition: all $buttonTransitionTime ease-in-out;
+  border: none;
+  outline: none;
+  position: relative;
+}
+
+@mixin buttonTrainHover(
+  $buttonHoverColor: #fff,
+  $borderRadius: 0px,
+  $animationName: name,
+  $animationSpeed: 1s,
+  $buttonFontWeight: 400,
+  $buttonFontSize: 14px,
+  $buttonLineHeight: 1.3,
+  $buttonTextColor: #000,
+  $buttonTextAlight: left
+) {
+  & .button-span {
+    @include fontSettings(
+                    $buttonFontWeight,
+                    $buttonFontSize,
+                    $buttonLineHeight,
+                    $buttonTextColor,
+                    $buttonTextAlight
+    );
+    position: relative;
+    z-index: 8;
+  }
+
+  &:after {
+    content: '';
+    background-color: $buttonHoverColor;
+    border-radius: $borderRadius;
+    z-index: 7;
+  }
+
+  &:hover::after {
+    animation: $animationName $animationSpeed ease-in-out;
+    @include positionSettings(absolute, 0, 0, 0, 0);
+  }
+}
+
+
+
+@mixin buttonDarkColorHover(
+  $buttonDarkColor: #000
+) {
+  &:hover {
+    background-color: $buttonDarkColor;
+    border: none;
+  }
+}
+
+@keyframes scratch {
+  0% {
+    @include widthHeight(0, 100%);
+    @include positionSettings(absolute, 0, 0);
+  }
+  100% {
+    @include widthHeight(100%, 100%);
+    @include positionSettings(absolute, 0, 0);
+  }
+}
+
+@mixin removeDefaultBorder(
+  $removePaddingValue: 10px,
+  $removeBorderBottom: 1px solid #999,
+  $removeTransitionTime: .2s,
+){
+  padding: $removePaddingValue;
+  border: none;
+  border-bottom: $removeBorderBottom;
+  transition: all $removeTransitionTime ease-in-out;
+}
+@mixin zIndexRelative(
+  $zIndexValue: 5,
+  $positionValue: relative
+){
+  position: $positionValue;
+  z-index: $zIndexValue;
+}
+
+
+@mixin buttonReset(
+  $transitionValue: .3s,
+  $positionValue: relative
+){
+  border: none;
+  outline: none;
+  overflow: hidden;
+  position: $positionValue;
+  transition: all $transitionValue ease-in-out;
+}
+@mixin buttonBg(
+  $backgroundColorValue: #fff,
+  $borderRadiusValue: 10px,
+  $paddingValue: 10px 12px,
+){
+  background-color: $backgroundColorValue;
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+@mixin buttonColorChangeHover(
+  $buttonBackgroundColor: #fff,
+  $buttonChangeColor: #000
+) {
+  &:hover {
+    background-color: $buttonBackgroundColor;
+    color: $buttonChangeColor;
+  }
+}
